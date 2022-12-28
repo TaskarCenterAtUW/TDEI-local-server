@@ -8,10 +8,25 @@ if ! hash which docker 2>/dev/null
 then 
     echo " docker not found on the system"
     echo " !!! Please install docker on your system before proceeding ..."
+    echo " !!! you could do that by sudo apt-get install docker "
     return 1
 else
     echo " found docker at $docker_path"
 fi
+
+echo " Checking if docker compose plugin is installed ... "
+dc_version=$(docker compose version)
+
+if [ -z "$dc_version" ]
+then
+    echo "docker compose plugin is not installed on the system"
+    echo " !!! Please install docker compose plugin"
+    echo " !!! you could install by using sudo apt-get install docker compose plugin "
+    return 1
+else
+    echo "  docker compose plugin is installed on the install.. "
+fi
+
 
 docker_image_tag="local-dev:0.1"
 echo "Checking if the local-dev docker image exists on the system..."
